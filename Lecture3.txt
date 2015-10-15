@@ -1,0 +1,27 @@
+Lecrure 3: Software Development 15.10.15
+
+Find all broken links (symbolic links) in your system:
+
+	find . -type l (finds all the links)
+	find / -type l -execc file {} \; | ls grep broken (execute file on every file and finds all broken file)
+
+Print the 100 most common words in a .txt file
+
+	cat file.txt | wc -w (finds # of words)
+	cat file.txt | egrep -o "[^a-zA-Z]+" | sort | unic -c | sort -n | head 100
+	
+	cp stopwords to dir
+	
+	- Try to remove words that match each other in a .txt file
+
+	cat words | grep -v "the" > words [Wrong]
+
+	cat words | grep -v "^the$"  (remove all the's in the file words)
+
+	for stopw in 'cat stopwords'; do grep -v "^$stopw$" w > w2 ; mv w2 w; done
+
+	sort w | uniq -c | sort -n 
+	
+	find . -iname "*.txt" -exec egrep ' .{81}' {} \; (Searches for all textfiles longer than 80 lines)
+
+	
