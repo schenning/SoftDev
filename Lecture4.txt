@@ -1,0 +1,114 @@
+29. Octobre Lecture Softdev
+
+Linux ToolSet (Part B)
+
+
+- Text-based web browsers (w3m, lynx, links)
+- Non interactive downloaders: Wget, curl 
+- IO through sockets: netcat
+- DNS query (host, dig)
+
+
+
+
+__________________________________________
+
+
+Wget [opt] url
+
+-m mirror an entire web site
+-r recursivly dl all the linked docs
+-l n spcify the max recursion depth to n
+...
+
+Can be used to crawl a website
+
+--spider don't dl the pages, just check that they are there
+
+__________________________________________
+
+Curl
+
+Similar to Wget, but supports more options
+
+Can pretend to be an browser, ie. Mozilla FFox
+
+Can be used for URL de-shortening (curl -sI http://short url) 
+__________________________________________
+
+TCP/IP Swiss Army Knife
+
+p.40
+
+__________________________________________
+
+- Remove everything that is not an alphabetic char
+	
+	#cat file.txt | egrep -o "[^a-zA-Z]+" 
+	Can use Sed or translate: 
+	cat file.txt | tr -c -d "a-zA-Z \n"
+	
+
+- Fix duplicated words:
+
+	Need to write a regular exp that 
+	cat file.txt | egrep --color '([^ ]+) \1 '
+	cat file.txt | egrep --color ' s/([^ ]+) \1 / \1 /g ' | egrep --color
+
+- Print the longest word in a file:
+	
+	cat file.txt | tr ' ' '\n' (translate spaces to newline)
+	cat file.txt | tr -c 'a-zA-Z' '\n' | awk '{print length ($0), $0}' | sort -n 
+
+
+IN A C HEADER FILE
+__________________
+
+- Update  copyright in a c header file
+
+	cat ar.h | sed 's/Copyright12/.... 201./Copyright 15
+
+	cat file.h | sed -n '/Copyright/s/[0-9]{4}/2015/g'
+
+
+- Replace the style of the comments from /* to // on every line:
+
+	cat file.h | sed -r -n '/^\/\*/,/\*\/$/s..-//-' | sed -r '/\/\//s-\*/$-$' 
+
+
+- Have the comments on a line before bc they are more than 8 characters:
+
+	cat file.h | sed -r 's-(.*)/\*(.*)\*/-// \2\n\1-'
+
+_____________________________________________
+
+Using ls -l print the total file size grouped by file extension:
+	ls -l | awk '{tot+=$5} END {print tot}' (need extension)
+	ls -l | tr '.' ' ' | awk '{tot+=$5} END {print tot}' 
+	
+	ls -l |tr '.' ' '| sed '/\/$/d' |awk '(NF>2)  {tot[$NF]+=$5} END {for (k in tot) print k,to	   t[k]}'
+
+
+
+	
+	
+
+
+
+	
+
+
+
+	 
+	
+
+
+
+
+
+
+
+
+
+ 
+ 
