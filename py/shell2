@@ -1,0 +1,1 @@
+cat command_line_fu.example.html | awk '/class="command"/ {print $0} /class="num-votes"/' | grep -o ">.*<" | tr -d "><" | awk '{ if (NF==1 && $0 >= 5) { print $1}}'

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#written by schenning
+shopt -s dotglob
+
+
+lets() {
+    local thang element=
+    for thang in "$1/"*; do
+        if [ -L "$thang" ]; then
+            :
+        elif [ -d "$thang" ]; then
+            if lets "$thang"; then
+                element=1
+            fi
+        elif [ -f "$thang" ];then
+        if [ -z "$(find "$thang" -atime +30 -print0)" ]; then
+          element=1
+        fi
+     fi
+done
+    if ((!element)); then
+        for parse in $1; do
+        if [[ "$sett" == *"$parse"* ]]; then
+            echo "$parse"
+            echo "$sett"
+        else
+            sett="$parse";
+            echo "$sett";
+        fi
+    done
+    return 1
+fi
+
+}
+
+#awk -F "\n"'{$NF}' 
+
+lets .  | sort | uniq -u    |  awk  -F "/" '{system("tar  --remove-files -zcf "$(NF)".tgz -C "$(NF-1)"  "$(NF)"  && mv "$(NF)".tgz "$(NF-1)"  " )}'
+#awk -F "/" ' {print ($(NF-1) " " $NF )} ' 
+#awk -F "." '{print $(NF-1) " " $NF}' | tr -d ' '
+
+# find -name "$NF" # | awk -F"/" '  { system (" tar --create -zcf "$NF".tgz "$NF"") }'
